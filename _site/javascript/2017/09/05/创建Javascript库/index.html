@@ -1,0 +1,944 @@
+
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/assets/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/assets/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/assets/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="翻译," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这篇文章的目的是通过演示一个简单的例子来介绍在JS中实例化和定义一个库的正确方法，以优化他人编写或维护自己的JS库。">
+<meta name="keywords" content="翻译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="优雅的创建一个JavaScript库">
+<meta property="og:url" content="http://localhost:4000/javascript/2017/09/05/%E5%88%9B%E5%BB%BAJavascript%E5%BA%93/">
+<meta property="og:site_name" content="Meng's Blog">
+<meta property="og:description" content="这篇文章的目的是通过演示一个简单的例子来介绍在JS中实例化和定义一个库的正确方法，以优化他人编写或维护自己的JS库。">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="优雅的创建一个JavaScript库">
+<meta name="twitter:description" content="这篇文章的目的是通过演示一个简单的例子来介绍在JS中实例化和定义一个库的正确方法，以优化他人编写或维护自己的JS库。">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://localhost:4000/"/>
+
+
+
+
+
+  <title>优雅的创建一个JavaScript库</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Meng's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">好奇宝宝的世界...</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+<div id="posts" class="posts-expand">
+  
+  
+
+  
+
+  
+  
+  
+
+  <article class="post post-type- " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/javascript/2017/09/05/%E5%88%9B%E5%BB%BAJavascript%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alyssa Meng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/me2.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Meng's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+          
+          
+            优雅的创建一个JavaScript库
+          
+        </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T00:00:00+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/#/JAVASCRIPT" itemprop="url" rel="index">
+                    <span itemprop="name">JAVASCRIPT</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/javascript/2017/09/05/%E5%88%9B%E5%BB%BAJavascript%E5%BA%93/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="/javascript/2017/09/05/%E5%88%9B%E5%BB%BAJavascript%E5%BA%93/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+            
+                <div class="post-description">
+                    这篇文章的目的是通过演示一个简单的例子来介绍在JS中实例化和定义一个库的正确方法，以优化他人编写或维护自己的JS库。
+                </div>
+            
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+  <p>在我们深入之前，我做了两点假设：</p>
+  <ul>
+    <li>你知道简单的JavaScript或C语言。</li>
+    <li>你不打算使用jQuery。通常情况下，一个JavaScript库不需要任何依赖。</li>
+  </ul>
+</blockquote>
+
+<!-- more -->
+
+<h2 id="简单定义">简单定义</h2>
+<p>首先，我遇到了第一个麻烦，即如何正确的看待一个JavaScript库。在C/C++中，一个库是功能的集合，并且通常不需要很完美的结构。
+而JavaScript的工作方式有所不同，因此我做了一些研究。最后的结论是，一个JavaScript库是一个包含在对象中的独立的模块，不会在自己的作用域以外定义函数来污染全局命名空间。</p>
+
+<p>基于此，我们可以简单的定义一个库：</p>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Library</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s2">"Meng"</span><span class="p">,</span>
+    <span class="na">greet</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"Hello from the "</span> <span class="o">+</span> <span class="nx">Library</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">" library."</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>这个库就是我们字面意思上所说的对象。要调用<code class="highlighter-rouge">greet</code>函数，我们要用：</p>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">Library</span><span class="p">.</span><span class="nx">greet</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>因为<code class="highlighter-rouge">greet</code>是<code class="highlighter-rouge">Library</code>对象的成员。现在，如果我们期望name变量为Library私有，应该怎么做呢？遗憾的是，这种库的定义方式无法实现这一点。</p>
+
+<p>而且，不仅仅是在其他文件中要通过<code class="highlighter-rouge">Library.name</code>来引用<code class="highlighter-rouge">name</code>变量，在<code class="highlighter-rouge">Library</code>中也要通过引用自己来引用<code class="highlighter-rouge">name</code>变量。这种解决方式看起来就很差劲。</p>
+
+<h2 id="私有化">私有化</h2>
+<p>解决私有化问题的方法是将<code class="highlighter-rouge">Library</code>定义为一个函数，在函数中定义对象。这种方式允许我们创建并使用私有的变量和方法。如下：</p>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Library</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"Candy"</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">greet</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"Hello from the "</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">" library."</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>在这种方式下，<code class="highlighter-rouge">Library.name</code>将不会暴露在全局，并且在<code class="highlighter-rouge">Library</code>内部也能被简单的引用。<code class="highlighter-rouge">greet</code>方法依然是公有的，因为通过关键字<code class="highlighter-rouge">this</code>将<code class="highlighter-rouge">greet</code>定义为<code class="highlighter-rouge">Library</code>的一个成员。</p>
+
+<blockquote>
+  <p>确定将什么暴露给谁，是架构的简单实践。</p>
+</blockquote>
+
+<h2 id="规避命名冲突">规避命名冲突</h2>
+<p>但是，现在我们有了新的问题。在如下场景中，用户已经定义了一个<code class="highlighter-rouge">Library</code>对象，并且引用了你的库。</p>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">//用户自己的Library对象</span>
+<span class="kd">var</span> <span class="nx">Library</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">book_num</span><span class="p">:</span> <span class="mi">1123</span><span class="p">,</span>
+    <span class="na">category</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"science"</span><span class="p">,</span>
+        <span class="s2">"social"</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1">//调用Library库中的方法</span>
+<span class="nx">Library</span><span class="p">.</span><span class="nx">greet</span><span class="p">();</span>
+</code></pre>
+</div>
+<p>这时，你的<code class="highlighter-rouge">Library</code>定义被覆盖，用户还将被告知“引用错误”。</p>
+
+<p>我们有一个更好的解决方案：将你的<code class="highlighter-rouge">library</code>包装在一个函数中，这个函数将在不存在命名冲突时被调用。如下：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
+    <span class="s1">'use strict'</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">define_library</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">Library</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"Candy"</span><span class="p">;</span>
+        <span class="nx">Library</span><span class="p">.</span><span class="nx">greet</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s2">"Hello from the "</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">" library."</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">Library</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">Library</span><span class="p">)</span> <span class="o">===</span> <span class="s2">"undefined"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">library</span> <span class="o">=</span> <span class="nx">define_library</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Library is already defined."</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">})(</span><span class="nb">window</span><span class="p">);</span>
+</code></pre>
+</div>
+<p><strong>首先</strong>，我们解释一下包装整个<code class="highlighter-rouge">library</code>的闭包:</p>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//CODE</span>
+<span class="p">})(</span><span class="nb">window</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>它的工作原理是，它包装了在它其中定义的代码，因此它拥有自己的命名空间。它也将会自动执行，因为末尾添加的<code class="highlighter-rouge">(window)</code>。</p>
+
+<p><strong>接着</strong>，我们介绍一下使用的<code class="highlighter-rouge">use strict</code>。这是一个可选配置，可以在<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode">这里</a>了解更多相关知识。由于我们整个定义是一个闭包，所以只需声明一次<code class="highlighter-rouge">use strict</code>，即可将严格模式应用于整个<code class="highlighter-rouge">library</code>。</p>
+
+<p><strong>然后</strong>，我们在<code class="highlighter-rouge">define_library()</code>函数中定义了<code class="highlighter-rouge">Library</code>对象，并且在函数最后返回了该对象。</p>
+
+<p><strong>最后</strong>，我们通过<code class="highlighter-rouge">typeof</code>判断当前是否有命名冲突，如果没有，我们将初始化我们的<code class="highlighter-rouge">Library</code>对象。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>喜欢的话就给我一块糖吧🍬🍬</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/wechatpay.jpeg" alt="Alyssa Meng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            
+            <a href="/tag/#/%E7%BF%BB%E8%AF%91" rel="tag"># 翻译</a>
+          
+        </div>
+      
+
+      
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+    </footer>
+  </article>
+
+  <div class="post-spread">
+    
+  </div>
+</div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        
+        
+        
+
+
+
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/me2.png"
+               alt="Alyssa Meng" />
+          <p class="site-author-name" itemprop="name">Alyssa Meng</p>
+           
+              <p class="site-description motion-element" itemprop="description">Curious Baby's world.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/234256465" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://github.com/mengpro" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+
+
+
+
+            
+              <div class="post-toc-content">
+    <ol class=nav>
+      <li class="nav-item nav-level-2"> <a class="nav-link" href="#简单定义"> <span class="nav-number">1</span> <span class="nav-text">简单定义</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#私有化"> <span class="nav-number">2</span> <span class="nav-text">私有化</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> </li></ol> </li></ol> </li></ol> </li></ol> </li> <li class="nav-item nav-level-2"> <a class="nav-link" href="#规避命名冲突"> <span class="nav-number">3</span> <span class="nav-text">规避命名冲突</span> </a> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child"> <ol class="nav-child">
+    </ol>
+  </div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alyssa Meng</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  
+  
+  
+  
+  <script type="text/javascript" src="/assets/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/assets/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Meng.disqus.com/count.js" async></script>
+    
+
+    
+      
+      <script type="text/javascript">
+          var disqus_config = function () {
+              this.page.url = 'http://localhost:4000/javascript/2017/09/05/%E5%88%9B%E5%BB%BAJavascript%E5%BA%93/';
+              this.page.identifier = '/javascript/2017/09/05/%E5%88%9B%E5%BB%BAJavascript%E5%BA%93/';
+              this.page.title = '优雅的创建一个JavaScript库';
+          };
+          var d = document, s = d.createElement('script');
+          s.src = 'https://Meng.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', '' + +new Date());
+          (d.head || d.body).appendChild(s);
+      </script>
+      
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
+

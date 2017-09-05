@@ -1,4 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   
+    <entry>
+      <title><![CDATA[优雅的创建一个JavaScript库]]></title>
+      <url>/javascript/2017/09/05/%E5%88%9B%E5%BB%BAJavascript%E5%BA%93/</url>
+      <content type="html"><![CDATA[<blockquote>
+  <p>在我们深入之前，我做了两点假设：</p>
+  <ul>
+    <li>你知道简单的JavaScript或C语言。</li>
+    <li>你不打算使用jQuery。通常情况下，一个JavaScript库不需要任何依赖。</li>
+  </ul>
+</blockquote>
+
+<!-- more -->
+
+<h2 id="简单定义">简单定义</h2>
+<p>首先，我遇到了第一个麻烦，即如何正确的看待一个JavaScript库。在C/C++中，一个库是功能的集合，并且通常不需要很完美的结构。
+而JavaScript的工作方式有所不同，因此我做了一些研究。最后的结论是，一个JavaScript库是一个包含在对象中的独立的模块，不会在自己的作用域以外定义函数来污染全局命名空间。</p>
+
+<p>基于此，我们可以简单的定义一个库：</p>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Library</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s2">"Meng"</span><span class="p">,</span>
+    <span class="na">greet</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"Hello from the "</span> <span class="o">+</span> <span class="nx">Library</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">" library."</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>这个库就是我们字面意思上所说的对象。要调用<code class="highlighter-rouge">greet</code>函数，我们要用：</p>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">Library</span><span class="p">.</span><span class="nx">greet</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>因为<code class="highlighter-rouge">greet</code>是<code class="highlighter-rouge">Library</code>对象的成员。现在，如果我们期望name变量为Library私有，应该怎么做呢？遗憾的是，这种库的定义方式无法实现这一点。</p>
+
+<p>而且，不仅仅是在其他文件中要通过<code class="highlighter-rouge">Library.name</code>来引用<code class="highlighter-rouge">name</code>变量，在<code class="highlighter-rouge">Library</code>中也要通过引用自己来引用<code class="highlighter-rouge">name</code>变量。这种解决方式看起来就很差劲。</p>
+
+<h2 id="私有化">私有化</h2>
+<p>解决私有化问题的方法是将<code class="highlighter-rouge">Library</code>定义为一个函数，在函数中定义对象。这种方式允许我们创建并使用私有的变量和方法。如下：</p>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Library</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"Candy"</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">greet</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"Hello from the "</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">" library."</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>在这种方式下，<code class="highlighter-rouge">Library.name</code>将不会暴露在全局，并且在<code class="highlighter-rouge">Library</code>内部也能被简单的引用。<code class="highlighter-rouge">greet</code>方法依然是公有的，因为通过关键字<code class="highlighter-rouge">this</code>将<code class="highlighter-rouge">greet</code>定义为<code class="highlighter-rouge">Library</code>的一个成员。</p>
+
+<blockquote>
+  <p>确定将什么暴露给谁，是架构的简单实践。</p>
+</blockquote>
+
+<h2 id="规避命名冲突">规避命名冲突</h2>
+<p>但是，现在我们有了新的问题。在如下场景中，用户已经定义了一个<code class="highlighter-rouge">Library</code>对象，并且引用了你的库。</p>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">//用户自己的Library对象</span>
+<span class="kd">var</span> <span class="nx">Library</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">book_num</span><span class="p">:</span> <span class="mi">1123</span><span class="p">,</span>
+    <span class="na">category</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"science"</span><span class="p">,</span>
+        <span class="s2">"social"</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1">//调用Library库中的方法</span>
+<span class="nx">Library</span><span class="p">.</span><span class="nx">greet</span><span class="p">();</span>
+</code></pre>
+</div>
+<p>这时，你的<code class="highlighter-rouge">Library</code>定义被覆盖，用户还将被告知“引用错误”。</p>
+
+<p>我们有一个更好的解决方案：将你的<code class="highlighter-rouge">library</code>包装在一个函数中，这个函数将在不存在命名冲突时被调用。如下：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
+    <span class="s1">'use strict'</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">define_library</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">Library</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"Candy"</span><span class="p">;</span>
+        <span class="nx">Library</span><span class="p">.</span><span class="nx">greet</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s2">"Hello from the "</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">" library."</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">Library</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">Library</span><span class="p">)</span> <span class="o">===</span> <span class="s2">"undefined"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">library</span> <span class="o">=</span> <span class="nx">define_library</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Library is already defined."</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">})(</span><span class="nb">window</span><span class="p">);</span>
+</code></pre>
+</div>
+<p><strong>首先</strong>，我们解释一下包装整个<code class="highlighter-rouge">library</code>的闭包:</p>
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nb">window</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//CODE</span>
+<span class="p">})(</span><span class="nb">window</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>它的工作原理是，它包装了在它其中定义的代码，因此它拥有自己的命名空间。它也将会自动执行，因为末尾添加的<code class="highlighter-rouge">(window)</code>。</p>
+
+<p><strong>接着</strong>，我们介绍一下使用的<code class="highlighter-rouge">use strict</code>。这是一个可选配置，可以在<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode">这里</a>了解更多相关知识。由于我们整个定义是一个闭包，所以只需声明一次<code class="highlighter-rouge">use strict</code>，即可将严格模式应用于整个<code class="highlighter-rouge">library</code>。</p>
+
+<p><strong>然后</strong>，我们在<code class="highlighter-rouge">define_library()</code>函数中定义了<code class="highlighter-rouge">Library</code>对象，并且在函数最后返回了该对象。</p>
+
+<p><strong>最后</strong>，我们通过<code class="highlighter-rouge">typeof</code>判断当前是否有命名冲突，如果没有，我们将初始化我们的<code class="highlighter-rouge">Library</code>对象。</p>
+]]></content>
+      <categories>
+        
+          <category> JAVASCRIPT </category>
+        
+      </categories>
+      <tags>
+        
+          <tag> 翻译 </tag>
+        
+      </tags>
+      <tags></tags>
+    </entry>
+  
 </search>

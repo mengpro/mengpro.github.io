@@ -1,4 +1,5 @@
 ---
+layout: post
 title: 优雅的创建一个JavaScript库
 description: 这篇文章的目的是通过演示一个简单的例子来介绍在JS中实例化和定义一个库的正确方法，以优化他人编写或维护自己的JS库。
 categories: 
@@ -18,8 +19,7 @@ tags:
 而JavaScript的工作方式有所不同，因此我做了一些研究。最后的结论是，一个JavaScript库是一个包含在对象中的独立的模块，不会在自己的作用域以外定义函数来污染全局命名空间。
 
 基于此，我们可以简单的定义一个库：
-
-```javascript
+```javascript
 var Library = {
     name: "Meng",
     greet: function() {
@@ -32,11 +32,12 @@ var Library = {
 ```javascript
 Library.greet()
 ```
+
 因为`greet`是`Library`对象的成员。现在，如果我们期望name变量为Library私有，应该怎么做呢？遗憾的是，这种库的定义方式无法实现这一点。
 
 而且，不仅仅是在其他文件中要通过`Library.name`来引用`name`变量，在`Library`中也要通过引用自己来引用`name`变量。这种解决方式看起来就很差劲。
 
-##私有化
+## 私有化
 解决私有化问题的方法是将`Library`定义为一个函数，在函数中定义对象。这种方式允许我们创建并使用私有的变量和方法。如下：
 ```javascript
 function Library() {
