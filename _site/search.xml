@@ -45,7 +45,7 @@
   
     <entry>
       <title><![CDATA[优雅的创建一个JavaScript库]]></title>
-      <url>/javascript/html/css/ios/python/2017/09/05/%E5%88%9B%E5%BB%BAJavascript%E5%BA%93/</url>
+      <url>/javascript/2017/09/05/%E5%88%9B%E5%BB%BAJavascript%E5%BA%93/</url>
       <content type="html"><![CDATA[<blockquote>
   <p>在我们深入之前，我做了两点假设：</p>
   <ul>
@@ -150,14 +150,6 @@
       <categories>
         
           <category> JAVASCRIPT </category>
-        
-          <category> HTML </category>
-        
-          <category> CSS </category>
-        
-          <category> iOS </category>
-        
-          <category> python </category>
         
       </categories>
       <tags>
