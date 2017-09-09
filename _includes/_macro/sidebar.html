@@ -17,7 +17,7 @@
         {% include _helper/toc.html %}
       {% endif %}
 
-      {% if display_toc and toc.size > 1 %}
+      <!-- {% if display_toc and toc.size > 1 %}
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
             {{ __.sidebar.toc }}
@@ -26,7 +26,7 @@
             {{ __.sidebar.overview }}
           </li>
         </ul>
-      {% endif %}
+      {% endif %} -->
 
       <section class="site-overview sidebar-panel{% unless display_toc and toc.size > 1 %} sidebar-panel-active{% endunless %}">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -37,7 +37,7 @@
            {% if site.seo %}
               <p class="site-description motion-element" itemprop="description">{{ site.signature }}</p>
            {% else %}
-              <p class="site-description motion-element" itemprop="description">{{ site.description }}</p>
+              <p class="site-description motion-element" itemprop="description">{{ site.subtitle }}</p>
           {% endif %}
         </div>
         <nav class="site-state motion-element">
@@ -144,8 +144,13 @@
       {% if display_toc and toc.size > 1 %}
       <!--noindex-->
         <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-banner">
+            <div>
+                <img src="/assets/images/category.png">
+            </div>
+            <span>文章目录</span>
+          </div>
           <div class="post-toc">
-
             {% if page.toc_number == nil %}
               {% assign list_number = site.toc.number %}
             {% else %}
@@ -168,7 +173,7 @@
 
       {% if site.sidebar.b2t %}
         <div class="back-to-top">
-          <i class="fa fa-arrow-up"></i>
+            <img src="/assets/images/rocket.png"/>
           {% if site.sidebar.scrollpercent %}
             <span id="scrollpercent"><span>0</span>%</span>
           {% endif %}

@@ -49,6 +49,7 @@
 @import "post-nav";
 @import "post-eof";
 @import "post-gallery";
+@import "custom-post";
 
 @import "post-reward";
 @if  jekyll-config('alipay') or jekyll-config('wechatpay') {

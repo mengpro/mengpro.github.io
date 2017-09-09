@@ -1,4 +1,4 @@
-{% comment %} post(post, is_index, post_extra_class) {% endcomment %}
+{% comment %} post(post, is_index, post_extra_class, is_post) {% endcomment %}
 
   {% if 'quote, picture' contains post.type %}
     {% assign headlessPost = true %}
@@ -25,36 +25,39 @@
 
     {% unless headlessPost %}
       <header class="post-header">
-
-        {% comment %} % Not to show title for quote posts that do not have a title {% endcomment %}
-        {% unless is_index and post.type == 'quote' and post.title == nil %}
-          <{% if site.seo %}h2{% else %}h1{% endif %} class="post-title" itemprop="name headline">
-          {% comment %} Link posts {% endcomment %}
-          {% if post.link %}
-              {% if post.sticky > 0 %}
-                {{ post.sticky }}
-                <span class="post-sticky-flag" title="{{ __.post.sticky }}">
-                  <i class="fa fa-thumb-tack"></i>
-                </span>
-              {% endif %}
-              <a class="post-title-link post-title-link-external" target="_blank" href="{{ post.link }}" itemprop="url">
-                {% if post.title %}{{ post.title }}{% else %}{{  post.link }}{% endif %}
-                <i class="fa fa-external-link"></i>
-              </a>
-            {% else %}
-            {% if is_index %}
+        {% if is_index %}
+  
+        {% else %}
+          {% comment %} % Not to show title for quote posts that do not have a title {% endcomment %}
+          {% unless is_index and post.type == 'quote' and post.title == nil %}
+            <{% if site.seo %}h2{% else %}h1{% endif %} class="post-title" itemprop="name headline">
+            {% comment %} Link posts {% endcomment %}
+            {% if post.link %}
                 {% if post.sticky > 0 %}
+                  {{ post.sticky }}
                   <span class="post-sticky-flag" title="{{ __.post.sticky }}">
                     <i class="fa fa-thumb-tack"></i>
                   </span>
                 {% endif %}
-                <a class="post-title-link" href="{{ post.url | relative_url }}" itemprop="url">
-                {{ post.title | default: __.post.untitled }}
-              </a>
-            {% else %}{{ post.title }}{% endif %}
-          {% endif %}
-        </{% if site.seo %}h2{% else %}h1{% endif %}>
-        {% endunless %}
+                <a class="post-title-link post-title-link-external" target="_blank" href="{{ post.link }}" itemprop="url">
+                  {% if post.title %}{{ post.title }}{% else %}{{  post.link }}{% endif %}
+                  <i class="fa fa-external-link"></i>
+                </a>
+              {% else %}
+              {% if is_index %}
+                  {% if post.sticky > 0 %}
+                    <span class="post-sticky-flag" title="{{ __.post.sticky }}">
+                      <i class="fa fa-thumb-tack"></i>
+                    </span>
+                  {% endif %}
+                  <a class="post-title-link" href="{{ post.url | relative_url }}" itemprop="url">
+                  {{ post.title | default: __.post.untitled }}
+                </a>
+              {% else %}{{ post.title }}{% endif %}
+            {% endif %}
+          </{% if site.seo %}h2{% else %}h1{% endif %}>
+          {% endunless %}
+        {% endif %}
 
         <div class="post-meta">
           <span class="post-time">
@@ -188,16 +191,16 @@
 
           {% comment %} LeanCould PageView {% endcomment %}
           {% if site.leancloud_visitors.enable %}
-             <span id="{{ post.url | relative_url }}" class="leancloud_visitors" data-flag-title="{{ post.title }}">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               {% if site.post_meta.item_text %}
-                 <span class="post-meta-item-text">{{__.post.visitors}} </span>
-               {% endif %}
-                 <span class="leancloud-visitors-count"></span>
-             </span>
+              <span id="{{ post.url | relative_url }}" class="leancloud_visitors" data-flag-title="{{ post.title }}">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-eye"></i>
+                </span>
+                {% if site.post_meta.item_text %}
+                  <span class="post-meta-item-text">{{__.post.visitors}} </span>
+                {% endif %}
+                  <span class="leancloud-visitors-count"></span>
+              </span>
           {% endif %}
 
           {% if site.busuanzi_count.enable and site.busuanzi_count.page_pv and is_index == false or is_index == nil%}
@@ -251,6 +254,39 @@
           {% endunless %}
 
         </div>
+
+        {% if is_index %}
+          {% comment %} % Not to show title for quote posts that do not have a title {% endcomment %}
+          {% unless is_index and post.type == 'quote' and post.title == nil %}
+            <{% if site.seo %}h2{% else %}h1{% endif %} class="post-title" itemprop="name headline">
+            {% comment %} Link posts {% endcomment %}
+            {% if post.link %}
+                {% if post.sticky > 0 %}
+                  {{ post.sticky }}
+                  <span class="post-sticky-flag" title="{{ __.post.sticky }}">
+                    <i class="fa fa-thumb-tack"></i>
+                  </span>
+                {% endif %}
+                <a class="post-title-link post-title-link-external" target="_blank" href="{{ post.link }}" itemprop="url">
+                  {% if post.title %}{{ post.title }}{% else %}{{  post.link }}{% endif %}
+                  <i class="fa fa-external-link"></i>
+                </a>
+              {% else %}
+              {% if is_index %}
+                  {% if post.sticky > 0 %}
+                    <span class="post-sticky-flag" title="{{ __.post.sticky }}">
+                      <i class="fa fa-thumb-tack"></i>
+                    </span>
+                  {% endif %}
+                  <a class="post-title-link" href="{{ post.url | relative_url }}" itemprop="url">
+                  {{ post.title | default: __.post.untitled }}
+                </a>
+              {% else %}{{ post.title }}{% endif %}
+            {% endif %}
+          </{% if site.seo %}h2{% else %}h1{% endif %}>
+          {% endunless %}
+        {% endif %}
+
       </header>
     {% endunless %}
 

@@ -27,14 +27,35 @@ html, body { height: 100%; }
 
 // Main Section
 // --------------------------------------------------
-.main { padding-bottom: $footer-height + $gap-between-main-and-footer; }
+.main { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: $footer-height + $gap-between-main-and-footer; 
+}
+.main-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $content-desktop;
+  @include desktop-large() {
+    .container & { width: $content-desktop-large; }
+  }
+}
 .main-inner {
   margin: 0 auto;
   width: $content-desktop;
+  background: white;
 
   @include desktop-large() {
     .container & { width: $content-desktop-large; }
   }
+}
+.main-inner.page-content {
+  background: transparent;
+}
+.content-wrap {
+  padding: 0 50px;
 }
 
 

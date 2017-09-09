@@ -25,13 +25,27 @@
 
   <div class="{{ container_class }} {{ page_class }} ">
     <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"> {% include _partials/header.html %} </div>
-    </header>
+    {% if site.scheme == 'Muse' %}
+    <div class="head-wrapper">
+      <div class="head-logo">
+          <img src="/assets/images/cat_icon.png">
+          {% if site.sidebar.display != 'remove' %}
+            {{ sidebar }}
+          {% endif %}
+      </div>
+      <div class="head-nav">
+          {% include _partials/head-nav.html %}
+      </div>
+    </div>
+    {% endif %}
 
     <main id="main" class="main">
-      <div class="main-inner">
+      {% if page.layout == "index" %}
+        <div class="main-banner">
+          <img src="/assets/images/snow_bac.jpg">
+        </div>
+      {% endif %}
+      <div class="main-inner{% if page.layout == 'index' %} index-content{% endif %}{% if page.layout == 'page' %} page-content{% endif %}">
         <div class="content-wrap">
           <div id="content" class="content">
             {{ content }}
@@ -39,9 +53,6 @@
           {% include _third-party/duoshuo-hot-articles.html %}
           {% include _partials/comments.html %}
         </div>
-        {% if site.sidebar.display != 'remove' %}
-          {{ sidebar }}
-        {% endif %}
       </div>
     </main>
 
@@ -54,8 +65,8 @@
     </footer>
 
     {% unless site.sidebar.b2t %}
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
+      <div class="back-to-top" data-toggle="tooltip" data-placement="left" title="Tooltip on left">
+        <img src="/assets/images/rocket.png"/>
         {% if site.sidebar.scrollpercent %}
           <span id="scrollpercent"><span>0</span>%</span>
         {% endif %}

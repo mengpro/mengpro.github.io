@@ -1,0 +1,120 @@
+.index-content {
+    .post {
+        margin-bottom: 100px;
+    }
+
+    .post-header {
+        display: flex;
+        flex-direction: column;
+    
+        .post-meta {
+            text-align: left;
+            margin: 0 0 10px;
+        }
+    
+        .post-title {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+    }
+
+    .post-body {
+        .post-button {
+            text-align: left;
+            margin: 25px 0 0;
+        }
+
+        .post-button>a {
+            color: #6DA2E2;
+            font-size: 13px;
+            background: transparent;
+            border-radius: 0;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+    }
+
+    .post-footer {
+        display: none;
+    }
+}
+
+.posts-expand {
+    .category-all-page {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 50px;
+
+        .category-all-title {
+            margin-bottom: 20px;
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .category-list-item {
+            width: 16%;
+            height: 150px;
+            background: white;
+            margin: 0 5% 0 0;
+        }
+
+        .category-list-item:hover {
+            box-shadow: 0 0 18px #dedede;
+        }
+
+        .category-list-item:nth-child(5n) {
+            margin-right: 0;
+        }
+
+        .category-list-link {
+            border: 0;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .category-list-link>img {
+            position: absolute;
+            bottom: -2px;
+            width: 30px;
+        }
+    }
+
+    .tag-cloud {
+        .tag-cloud-title {
+            margin-bottom: 20px;
+        }
+
+        .tag-cloud-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tag-cloud-tags>a {
+            display: flex;
+            align-items: center;
+            background: url('/assets/images/tag.png') no-repeat;
+            width: 58px;
+            height: 25px;
+            background-size: contain;
+            margin: 0 15px 0 0;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .tag-cloud-tags>a>span {
+            font-size: 13px;
+            position: relative;
+            left: 20px;
+        }
+    }
+}

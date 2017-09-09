@@ -14,7 +14,7 @@
 
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -126,7 +126,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '',
-    scheme: 'Pisces',
+    scheme: 'Muse',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
@@ -179,102 +179,155 @@
 
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
+    
+    <div class="head-wrapper">
+      <div class="head-logo">
+          <img src="/assets/images/cat_icon.png">
+          
+            
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"> <div class="site-brand-wrapper">
-  <div class="site-meta custom-logo">
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <!--  -->
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/me2.png"
+               alt="Alyssa Meng" />
+          <p class="site-author-name" itemprop="name">Alyssa Meng</p>
+           
+              <p class="site-description motion-element" itemprop="description">好奇宝宝的世界...</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/234256465" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              
+              
+              <span class="links-of-author-item">
+                <a href="https://github.com/mengpro" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+          
+      </div>
+      <div class="head-nav">
+          
+ 
+<ul id="menu" class="menu">
+       
+    <li class="menu-item menu-item-home">
+        <a href="/" rel="section">
+        
+        首页
+    </a>
+    </li>
+       
+    <li class="menu-item menu-item-categories">
+        <a href="/categories/" rel="section">
+        
+        分类
+    </a>
+    </li>
+       
+    <li class="menu-item menu-item-tags">
+        <a href="/tags/" rel="section">
+        
+        标签
+    </a>
+    </li>
+     
+</ul>
+ 
+      </div>
+    </div>
     
 
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Meng's Blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle">好奇宝宝的世界...</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
     <main id="main" class="main">
-      <div class="main-inner">
+      
+      <div class="main-inner page-content">
         <div class="content-wrap">
           <div id="content" class="content">
             
 <div id="posts" class="posts-expand">
-<header class="post-header">
-
-	<h1 class="post-title" itemprop="name headline">NexT</h1>
-
-
-
-</header>
-
   
   
     <h1 id="next">NexT</h1>
@@ -475,111 +528,6 @@ Next use <code class="highlighter-rouge">normal</code> by default. Have a previe
           
 
         </div>
-        
-          
-
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/uploads/me2.png"
-               alt="Alyssa Meng" />
-          <p class="site-author-name" itemprop="name">Alyssa Meng</p>
-           
-              <p class="site-description motion-element" itemprop="description">Curious Baby's world.</p>
-          
-        </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="">
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/">
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-
-        </nav>
-
-        
-        
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              
-              
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/234256465" target="_blank" title="微博">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  微博
-                </a>
-              </span>
-            
-              
-              
-              <span class="links-of-author-item">
-                <a href="https://github.com/mengpro" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-
-      
-
-    </div>
-  </aside>
-
-        
       </div>
     </main>
 
@@ -604,8 +552,8 @@ Next use <code class="highlighter-rouge">normal</code> by default. Have a previe
     </footer>
 
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
+      <div class="back-to-top" data-toggle="tooltip" data-placement="left" title="Tooltip on left">
+        <img src="/assets/images/rocket.png"/>
         
       </div>
     
@@ -704,13 +652,6 @@ Next use <code class="highlighter-rouge">normal</code> by default. Have a previe
   
   
 
-
-  <script type="text/javascript" src="/assets/js/src/affix.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/assets/js/src/schemes/pisces.js?v=5.1.1"></script>
-
-
-
   <script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.1"></script>
 
@@ -727,8 +668,6 @@ Next use <code class="highlighter-rouge">normal</code> by default. Have a previe
 
   
 
-    
-      <script id="dsq-count-scr" src="https://Meng.disqus.com/count.js" async></script>
     
 
     

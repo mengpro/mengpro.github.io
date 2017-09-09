@@ -4,6 +4,10 @@ title: 优雅的创建一个JavaScript库
 description: 这篇文章的目的是通过演示一个简单的例子来介绍在JS中实例化和定义一个库的正确方法，以优化他人编写或维护自己的JS库。
 categories: 
  - JAVASCRIPT
+ - HTML
+ - CSS
+ - iOS
+ - python
 tags:
  - 翻译
 ---
